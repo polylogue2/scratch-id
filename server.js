@@ -20,6 +20,7 @@ app.use(route3);  // Use saveDetails routes
 
 // Serve static files from src/public
 app.use(express.static(path.join(__dirname, 'src', 'public')));
+app.use(express.static(path.join(__dirname, 'src', 'lib')));
 
 // Start the server
 app.listen(3000, () => {
