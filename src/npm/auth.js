@@ -7,7 +7,7 @@ const DEFAULT_REDIRECT = 'https://scratch-id.onrender.com/';
 // Utility function to handle verification and post to /api/auth
 async function handleVerification(username, redirect, res) {
   try {
-    const authResponse = await axios.post('http://localhost:3000/api/auth', {
+    const authResponse = await axios.post('/api/auth', {
       user: username, // Match expected field
       redirect: redirect || DEFAULT_REDIRECT
     });
