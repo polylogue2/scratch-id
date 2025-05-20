@@ -46,7 +46,7 @@ async function verifyCode() {
     if (data.message === "success") {
       statusMsg.textContent = "Login successful! Redirecting...";
       if (redirect) {
-        window.location.href = atob(redirect);
+        window.location.href = `${atob(redirect)}?id=${data.id}`;
       }
     } else {
       statusMsg.textContent = "Verification failed. Please try again.";
