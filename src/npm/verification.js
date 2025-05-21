@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { codes } = require('./seeDetails'); // adjust path as needed
+const { codes } = require('./saveDetails'); // adjust path as needed
 
 router.get('/verification/:id', (req, res) => {
   const { id } = req.params;
