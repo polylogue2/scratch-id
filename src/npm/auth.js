@@ -20,7 +20,7 @@ async function handleVerification(username, redirect, res) {
       id
     });
   } catch (error) {
-    return res.status(500).json({ message: "failed", error: "Failed to authorize user" });
+    return res.status(500).json({ message: "failed", error: error });
   }
 }
 
