@@ -12,7 +12,7 @@ async function handleVerification(username, redirect, res) {
       redirect: redirect || DEFAULT_REDIRECT
     };
 
-    const authResponse = await axios.post('/api/auth', payload);
+    const authResponse = await axios.post('http://localhost:3000/api/auth', payload);
     const { id } = authResponse.data;
 
     return res.json({
