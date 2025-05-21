@@ -49,7 +49,7 @@ async function verifyCode() {
         window.location.href = `${atob(redirect)}?id=${data.id}`;
       }
     } else {
-      statusMsg.textContent = "Verification failed. Please try again.";
+      statusMsg.textContent = data.error;
     }
   } catch (err) {
     statusMsg.textContent = "An error occurred. Please try again later.";
