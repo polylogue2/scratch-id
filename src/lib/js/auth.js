@@ -39,7 +39,7 @@ async function verifyCode() {
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: generatedCode })
+      body: JSON.stringify({ code: generatedCode, redirect: atob(redirect) })
     });
 
     const data = await res.json();
