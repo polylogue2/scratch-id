@@ -7,12 +7,14 @@ const DEFAULT_REDIRECT = 'https://scratch-id.onrender.com/';
 // Utility function to handle verification and post to /api/auth
 async function handleVerification(username, redirect, res) {
   try {
-    const authResponse = await axios.post('/api/auth', {
-      user: username, // Match expected field
+    const payload = {
       redirect: redirect || DEFAULT_REDIRECT
-    });
+    };
+    if (username) payload.user = username;
 
+    const authResponse = await axios.post('/api/auth', payload);
     const { id } = authResponse.data;
+
     return res.json({
       message: "success",
       id
@@ -25,8 +27,8 @@ async function handleVerification(username, redirect, res) {
 router.post('/auth/comments', async (req, res) => {
   const { code, username, redirect } = req.body;
 
-  if (!code || !username) {
-    return res.status(400).json({ message: "failed", error: "Missing code or username" });
+  if (!code) {
+    return res.status(400).json({ message: "failed", error: "Missing code" });
   }
 
   try {
@@ -49,8 +51,8 @@ router.post('/auth/comments', async (req, res) => {
 router.post('/auth/cloud', async (req, res) => {
   const { code, username, redirect } = req.body;
 
-  if (!code || !username) {
-    return res.status(400).json({ message: "failed", error: "Missing code or username" });
+  if (!code) {
+    return res.status(400).json({ message: "failed", error: "Missing code" });
   }
 
   try {
