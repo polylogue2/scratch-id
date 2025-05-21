@@ -5,7 +5,7 @@ const path = require('path');
 // Import routes from src/npm
 const route1 = require('./src/npm/auth');
 const route2 = require('./src/npm/verification');
-const route3 = require('./src/npm/saveDetails');
+const { router } = require('./src/npm/saveDetails');
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());         // Parse incoming JSON bodies
 // Use the imported routes
 app.use(route1);  // Use auth routes
 app.use(route2);  // Use verification routes
-app.use(route3);  // Use saveDetails routes
+app.use(router);  // Use saveDetails routes
 
 // Serve static files from src/public
 app.use(express.static(path.join(__dirname, 'src', 'public')));
