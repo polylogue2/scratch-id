@@ -8,9 +8,9 @@ const DEFAULT_REDIRECT = 'https://scratch-id.onrender.com/';
 async function handleVerification(username, redirect, res) {
   try {
     const payload = {
+      user: username,
       redirect: redirect || DEFAULT_REDIRECT
     };
-    if (username) payload.user = username;
 
     const authResponse = await axios.post('/api/auth', payload);
     const { id } = authResponse.data;
@@ -25,7 +25,7 @@ async function handleVerification(username, redirect, res) {
 }
 
 router.post('/auth/comments', async (req, res) => {
-  const { code, username, redirect } = req.body;
+  const { code, redirect } = req.body;
 
   if (!code) {
     return res.status(400).json({ message: "failed", error: "Missing code" });
@@ -39,6 +39,10 @@ router.post('/auth/comments', async (req, res) => {
 
     const match = data.find(comment => comment.content === code);
     if (match) {
+      const username = match.author?.username;
+      if (!username) {
+        return res.status(500).json({ message: "failed", error: "Could not extract username from comment" });
+      }
       return await handleVerification(username, redirect, res);
     } else {
       return res.json({ message: "failed" });
@@ -49,7 +53,7 @@ router.post('/auth/comments', async (req, res) => {
 });
 
 router.post('/auth/cloud', async (req, res) => {
-  const { code, username, redirect } = req.body;
+  const { code, redirect } = req.body;
 
   if (!code) {
     return res.status(400).json({ message: "failed", error: "Missing code" });
@@ -63,6 +67,10 @@ router.post('/auth/cloud', async (req, res) => {
 
     const match = data.find(cloud => cloud.value === code);
     if (match) {
+      const username = match.user;
+      if (!username) {
+        return res.status(500).json({ message: "failed", error: "Could not extract username from cloud log" });
+      }
       return await handleVerification(username, redirect, res);
     } else {
       return res.json({ message: "failed" });
