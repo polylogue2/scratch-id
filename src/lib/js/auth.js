@@ -3,7 +3,7 @@ const params = new URLSearchParams(window.location.search);
 const groupName = params.get("name") || "Modular Group";
 const redirect = params.get("redirect") || null;
 document.getElementById("group-name").textContent = groupName;
-document.getElementById("login-msg").textContent = `${groupName} wants to login with your Scratch account.`;
+document.getElementById("login-msg").textContent = `${groupName} wants to login with your Scratch account via ScratchID.`;
 
 const modal = document.getElementById("auth-modal");
 const codeEl = document.getElementById("auth-code");
