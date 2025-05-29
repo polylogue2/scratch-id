@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login Page</title>
+  <title>Login With Scratch</title>
   <link rel="stylesheet" href="/css/auth.css">
 </head>
 <body>
@@ -10,16 +10,17 @@
   <p id="login-msg">Modular Group wants to login with your Scratch account.</p>
 
   <div id="login-options" class="center">
-    <button class="btn" onclick="startAuth('comments')">Login with Comments</button>
+    <button class="btn" onclick="startAuth('comments')">Login via Commenting</button>
     <button class="btn" onclick="startAuth('cloud')">Login with Cloud</button>
   </div>
+  <small>Cloud login will not work for New Scratchers.</small>
 
   <div class="modal" id="auth-modal">
     <div class="center">
-      <h2>Authentication</h2>
+      <h2>Scratch Authentication</h2>
       <p id="auth-instructions"></p>
       <div class="code" id="auth-code">------</div>
-      <button class="btn" onclick="verifyCode()">I've Done It</button>
+      <button class="btn" onclick="verifyCode()">Done</button>
       <button class="btn" onclick="closeModal()">Cancel</button>
       <p id="status-msg"></p>
     </div>
