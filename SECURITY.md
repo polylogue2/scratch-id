@@ -2,4 +2,4 @@
 
 ## Reporting a Vulnerability
 
-To report a security vulnerability, you mist tell us in the security section of tbis repository. Faliure to report these and abusing them on someone else with out their permission can be illegal so you should report these.
+To report a security vulnerability, you must tell us in the security section of this repository. Failure to report these and misusing them on someone else without their permission is illegal.
