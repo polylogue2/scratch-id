@@ -81,3 +81,123 @@ router.post('/auth/cloud', async (req, res) => {
 });
 
 module.exports = router;
+
+// Below is captcha stuff that is still WIP but not used yet
+
+    // Get references to DOM elements
+        const captchaCanvas = document.getElementById('captchaCanvas');
+        const ctx = captchaCanvas.getContext('2d');
+        const captchaInput = document.getElementById('captchaInput');
+        const refreshCaptchaBtn = document.getElementById('refreshCaptchaBtn');
+        const verifyCaptchaBtn = document.getElementById('verifyCaptchaBtn');
+        const messageDiv = document.getElementById('message');
+
+        // Variable to store the generated CAPTCHA text
+        let captchaText = '';
+
+        /**
+         * Generates a random alphanumeric string for the CAPTCHA.
+         * @param {number} length - The desired length of the CAPTCHA string.
+         * @returns {string} The generated CAPTCHA string.
+         */
+        function generateCaptchaText(length = 6) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        /**
+         * Draws the CAPTCHA text onto the canvas with distortion.
+         * Adds random lines and dots for added complexity.
+         */
+        function drawCaptcha() {
+            // Clear the canvas before drawing new CAPTCHA
+            ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+
+            // Set background color
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+
+            // Generate new CAPTCHA text
+            captchaText = generateCaptchaText();
+
+            // Set text properties
+            ctx.font = 'bold 30px Inter, sans-serif'; // Use Inter font
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+
+            // Draw each character with slight rotation and offset
+            const charWidth = captchaCanvas.width / captchaText.length;
+            for (let i = 0; i < captchaText.length; i++) {
+                ctx.fillStyle = `rgb(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200})`; // Random color for each char
+                ctx.save(); // Save the current canvas state
+
+                const x = i * charWidth + charWidth / 2;
+                const y = captchaCanvas.height / 2 + (Math.random() * 20 - 10); // Random vertical offset
+
+                ctx.translate(x, y); // Move origin to character position
+                ctx.rotate((Math.random() * 0.4 - 0.2)); // Random rotation (-0.2 to 0.2 radians)
+                ctx.fillText(captchaText[i], 0, 0); // Draw character at new origin
+
+                ctx.restore(); // Restore the canvas state
+            }
+
+            // Add random lines
+            for (let i = 0; i < 5; i++) {
+                ctx.strokeStyle = `rgb(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200})`;
+                ctx.lineWidth = Math.random() * 2 + 1; // Random line width
+                ctx.beginPath();
+                ctx.moveTo(Math.random() * captchaCanvas.width, Math.random() * captchaCanvas.height);
+                ctx.lineTo(Math.random() * captchaCanvas.width, Math.random() * captchaCanvas.height);
+                ctx.stroke();
+            }
+
+            // Add random dots
+            for (let i = 0; i < 50; i++) {
+                ctx.fillStyle = `rgb(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200})`;
+                ctx.beginPath();
+                ctx.arc(Math.random() * captchaCanvas.width, Math.random() * captchaCanvas.height, Math.random() * 2 + 0.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        /**
+         * Verifies the user's input against the generated CAPTCHA text.
+         * Displays a success or failure message.
+         */
+        function verifyCaptcha() {
+            const userInput = captchaInput.value.trim();
+            if (userInput.toLowerCase() === captchaText.toLowerCase()) {
+                messageDiv.textContent = 'CAPTCHA Verified Successfully!';
+                messageDiv.className = 'mt-6 text-center text-lg font-semibold text-green-600';
+            } else {
+                messageDiv.textContent = 'CAPTCHA Verification Failed. Please try again.';
+                messageDiv.className = 'mt-6 text-center text-lg font-semibold text-red-600';
+            }
+            // Clear the input field after verification
+            captchaInput.value = '';
+            // Redraw CAPTCHA for a new attempt
+            drawCaptcha();
+        }
+
+        // Event Listeners
+        refreshCaptchaBtn.addEventListener('click', () => {
+            drawCaptcha();
+            captchaInput.value = ''; // Clear input on refresh
+            messageDiv.textContent = ''; // Clear message on refresh
+        });
+
+        verifyCaptchaBtn.addEventListener('click', verifyCaptcha);
+
+        // Allow pressing Enter key to verify
+        captchaInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                verifyCaptcha();
+            }
+        });
+
+        // Initial CAPTCHA draw when the page loads
+        window.onload = drawCaptcha;
