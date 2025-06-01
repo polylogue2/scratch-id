@@ -171,11 +171,13 @@ module.exports = router;
         function verifyCaptcha() {
             const userInput = captchaInput.value.trim();
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
-                messageDiv.textContent = 'CAPTCHA Verified Successfully!';
+                messageDiv.textContent = 'CAPTCHA Verified Successfully! You can now use the Done button.
                 messageDiv.className = 'mt-6 text-center text-lg font-semibold text-green-600';
+                const captchacompleted = "yes"
             } else {
                 messageDiv.textContent = 'CAPTCHA Verification Failed. Please try again.';
                 messageDiv.className = 'mt-6 text-center text-lg font-semibold text-red-600';
+                const captchacompleted = "failed"
             }
             // Clear the input field after verification
             captchaInput.value = '';
