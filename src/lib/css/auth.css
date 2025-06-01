@@ -53,3 +53,13 @@ h1, p {
 .hidden {
   display: none;
 }
+
+/* Below is Captcha stuff that we are still working on */
+.canvas {
+  display: block;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem; /* Apply rounded corners to canvas */
+  max-width: 100%; /* Ensure canvas is responsive */
+  height: auto; /* Maintain aspect ratio */
+}
