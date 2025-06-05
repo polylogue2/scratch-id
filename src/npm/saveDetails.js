@@ -17,8 +17,9 @@ function generateRandom() {
 }
 
 router.post('/api/auth', (req, res) => {
-  const { user, redirect, ip } = req.body;
+  const { user, redirect } = req.body;
 
+  ip = req.ip;
   const id = generateRandom();
   const timestamp = Date.now();
   
