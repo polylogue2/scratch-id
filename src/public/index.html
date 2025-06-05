@@ -2,51 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login With Scratch</title>
-  <link rel="stylesheet" href="/css/auth.css" />
-  <style>
-    .center {
-      text-align: center;
-    }
-    .btn {
-      margin: 10px;
-      padding: 10px 20px;
-      background-color: #4A90E2;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .btn:hover {
-      background-color: #357ABD;
-    }
-  </style>
+  <title>Login Page</title>
+  <link href="/css/auth.css" rel="stylesheet">
 </head>
 <body>
   <h1>Login to <span id="group-name">Modular Group</span></h1>
   <p id="login-msg">Modular Group wants to login with your Scratch account.</p>
-  <center><small><a href="docs.html">Documentation</a></small></center>
 
   <div id="login-options" class="center">
-    <button class="btn" onclick="startAuth('comments')">Login via Commenting</button>
+    <button class="btn" onclick="startAuth('comments')">Login with Comments</button>
+    <button class="btn" onclick="docs()">Docs</button>
     <button class="btn" onclick="startAuth('cloud')">Login with Cloud</button>
   </div>
 
-  <small>Cloud login will not work for New Scratchers.</small><br>
-  <small>This will allow ScratchID to know your Scratch Username, nothing else.</small>
-
-  <div class="modal" id="auth-modal" style="display: none;">
+  <div class="modal" id="auth-modal">
     <div class="center">
-      <h2>Scratch Authentication</h2>
+      <h2>Authentication</h2>
       <p id="auth-instructions"></p>
       <div class="code" id="auth-code">------</div>
-      <button class="btn" onclick="verifyCode()">Done</button>
+      <button class="btn" onclick="verifyCode()">I've Done It</button>
       <button class="btn" onclick="closeModal()">Cancel</button>
       <p id="status-msg"></p>
     </div>
   </div>
 
   <script src="/js/auth.js"></script>
+  <script>
+    function docs() {
+      window.location.href = 'docs.html';
+    }
+  </script>
 </body>
 </html>
