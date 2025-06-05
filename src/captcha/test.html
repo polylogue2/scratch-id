@@ -1,0 +1,98 @@
+<canvas id="captchaCanvas" width="200" height="60"></canvas>
+<input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+<button id="refreshCaptchaBtn">Refresh</button>
+<button id="verifyCaptchaBtn">Verify</button>
+<div id="message"></div>
+
+<script>
+  const captchaCanvas = document.getElementById('captchaCanvas');
+  const ctx = captchaCanvas.getContext('2d');
+  const captchaInput = document.getElementById('captchaInput');
+  const refreshCaptchaBtn = document.getElementById('refreshCaptchaBtn');
+  const verifyCaptchaBtn = document.getElementById('verifyCaptchaBtn');
+  const messageDiv = document.getElementById('message');
+
+  let captchaText = '';
+  let captchacompleted = "no";
+
+  function generateCaptchaText(length = 6) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
+
+  function drawCaptcha() {
+    ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+
+    captchaText = generateCaptchaText();
+    ctx.font = 'bold 30px Inter, sans-serif';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+
+    const charWidth = captchaCanvas.width / captchaText.length;
+    for (let i = 0; i < captchaText.length; i++) {
+      ctx.fillStyle = `rgb(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200})`;
+      ctx.save();
+
+      const x = i * charWidth + charWidth / 2;
+      const y = captchaCanvas.height / 2 + (Math.random() * 20 - 10);
+      ctx.translate(x, y);
+      ctx.rotate((Math.random() * 0.4 - 0.2));
+      ctx.fillText(captchaText[i], 0, 0);
+      ctx.restore();
+    }
+
+    for (let i = 0; i < 5; i++) {
+      ctx.strokeStyle = `rgb(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200})`;
+      ctx.lineWidth = Math.random() * 2 + 1;
+      ctx.beginPath();
+      ctx.moveTo(Math.random() * captchaCanvas.width, Math.random() * captchaCanvas.height);
+      ctx.lineTo(Math.random() * captchaCanvas.width, Math.random() * captchaCanvas.height);
+      ctx.stroke();
+    }
+
+    for (let i = 0; i < 50; i++) {
+      ctx.fillStyle = `rgb(${Math.random() * 200}, ${Math.random() * 200}, ${Math.random() * 200})`;
+      ctx.beginPath();
+      ctx.arc(Math.random() * captchaCanvas.width, Math.random() * captchaCanvas.height, Math.random() * 2 + 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function verifyCaptcha() {
+    const userInput = captchaInput.value.trim();
+    if (userInput.toLowerCase() === captchaText.toLowerCase()) {
+      messageDiv.textContent = 'CAPTCHA Verified Successfully! You can now use the Done button.';
+      messageDiv.className = 'mt-6 text-center text-lg font-semibold text-green-600';
+      captchacompleted = "yes";
+    } else {
+      messageDiv.textContent = 'CAPTCHA Verification Failed. Please try again.';
+      messageDiv.className = 'mt-6 text-center text-lg font-semibold text-red-600';
+      captchacompleted = "failed";
+    }
+
+    captchaInput.value = '';
+    drawCaptcha();
+  }
+
+  refreshCaptchaBtn.addEventListener('click', () => {
+    drawCaptcha();
+    captchaInput.value = '';
+    messageDiv.textContent = '';
+  });
+
+  verifyCaptchaBtn.addEventListener('click', verifyCaptcha);
+
+  captchaInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+      verifyCaptcha();
+    }
+  });
+
+  window.onload = drawCaptcha;
+</script>
