@@ -9,7 +9,6 @@ async function handleVerification(username, redirect, res) {
   try {
     const payload = {
       user: username,
-      ip: req.ip,
       redirect: redirect || DEFAULT_REDIRECT
     };
 
