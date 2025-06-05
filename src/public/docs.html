@@ -30,7 +30,7 @@
   <div class="section">
     <h2>Frontend Integration</h2>
     <p>Redirect your users to:</p>
-    <pre><code>https://scratch-id-login-site.com/?name=YourSiteName&amp;redirect=BASE64_ENCODED_RETURN_URL</code></pre>
+    <pre><code>https://scratch-id.onrender.com/?name=YourSiteName&amp;redirect=BASE64_ENCODED_RETURN_URL</code></pre>
     <p><strong>Parameters:</strong></p>
     <ul>
       <li><code>name</code> — Displayed to the user as the app requesting login (e.g. "Modular Group").</li>
@@ -66,13 +66,12 @@
   <div class="section">
     <h2>Example Usage (Fetching user)</h2>
     <pre><code>async function checkAuth() {
-  const PC = new URLSearchParams(window.location.search).get('id');
-  if (PC) {
-    const res = await fetch(`https://corsproxy.io/?url=https://scratch-id.onrender.com/verification/${PC}`);
+  const privateCode = new URLSearchParams(window.location.search).get('id');
+  if (privateCode) {
+    const res = await fetch(`https://corsproxy.io/?url=https://scratch-id.onrender.com/verification/${privateCode}`);
     const data = await res.json();
     const key = Object.keys(data)[0];
     const username = data[key].user;
-    const encoded = btoa(username);
     console.log("Scratch User:", username);
   }
 }</code></pre>
@@ -82,9 +81,9 @@
     <h2>License & Credits</h2>
     <p>This system was built to bridge Scratch and external sites securely. Not affiliated with Scratch or the Scratch Team.</p>
     <b>Below is a list of the main people who helped make ScratchID come true:</b>
-    - kRxZykRxZy <span class="admin">Admin</span><span class="most-commits">Most Commits</span>
+    - kRxZykRxZy <span class="admin">Admin</span> <span class="most-commits">Most Commits</span>
     </br>
-    - polylogue2
+    - polylogue2 <span class="admin">Previous Owner</span>
     </br>
     - MyScratchedAccount (aka Fluffy278)
     </br>
