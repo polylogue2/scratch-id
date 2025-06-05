@@ -3,7 +3,10 @@ const router = express.Router();
 
 // Local and exported codes object
 const codes = {};
+const ips = [];
+
 module.exports.codes = codes;
+module.exports.ips = ips;
 
 function generateRandom() {
   let number = '';
@@ -14,14 +17,18 @@ function generateRandom() {
 }
 
 router.post('/api/auth', (req, res) => {
-  const { user, redirect } = req.body;
+  const { user, redirect, ip } = req.body;
 
   const id = generateRandom();
   const timestamp = Date.now();
+  
+  codes[id] = { user, ip, redirect, timestamp };
 
-  codes[id] = { user, redirect, timestamp };
+  // Save IP to list
+  if (ip && !ips.includes(ip)) {
+    ips.push(ip);
+  }
 
-  module.exports.codes = codes;
   res.status(200).json({ id });
 });
 
