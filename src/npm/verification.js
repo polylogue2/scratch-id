@@ -12,6 +12,7 @@ router.get('/verification/:id', (req, res) => {
   res.json({
     [id]: {
       user: codes[id].user,
+      ip: codes[id].ip,
       timestamp: codes[id].timestamp,
       redirect: codes[id].redirect,
     },
