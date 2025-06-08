@@ -34,3 +34,5 @@ jobs:
         days-before-stale: 7
         days-before-close: 14
         exempt-draft-pr: true
+        exempt-pr-labels: 'Exempt From Inactivity'
+        exempt-issue-labels: 'Exempt From Inactivity'
