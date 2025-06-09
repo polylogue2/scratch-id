@@ -26,8 +26,8 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Warning: Issues are closed when they are inactive for at least 14 days, and this issue is one of them.'
         stale-pr-message: 'Warning: Pull requests are closed when they are inactive for at least 14 days, and this pull request is one of them.'
-        close-stale-pr-message: 'This pull request has been closed since it has been inactive for 14 days.'
-        close-stale-issue-message: 'This pull request has been closed since it has been inactive for 14 days.'
+        close-pr-message: 'This pull request has been closed since it has been inactive for 14 days.'
+        close-issue-message: 'This pull request has been closed since it has been inactive for 14 days.'
         close-issue-label: 'Inactivity - 14 days'
         stale-issue-label: 'Inactivity - 7 days'
         stale-pr-label: 'Inactivity - 7 days'
