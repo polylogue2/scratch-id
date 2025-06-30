@@ -17,6 +17,7 @@ router.get('/verification/:id', (req, res) => {
       redirect: codes[id].redirect,
     },
   });
+  codes[id] = [];
 });
 
 module.exports = router;
