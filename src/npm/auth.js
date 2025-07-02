@@ -27,12 +27,12 @@ async function handleVerification(username, redirect, res) {
 
 router.post('/auth/comments', async (req, res) => {
   const { code, redirect } = req.body;
-  codes.push(code);
-  
-  if(codes.includes(code)) {
+    if(codes.includes(code)) {
         return res.status(400).json({ message: "failed", error: "Code Already Used Before" });
   }
-
+  
+  codes.push(code);
+  
   if (!code) {
     return res.status(400).json({ message: "failed", error: "Missing code" });
   }
@@ -60,7 +60,13 @@ router.post('/auth/comments', async (req, res) => {
 
 router.post('/auth/cloud', async (req, res) => {
   const { code, redirect } = req.body;
-
+  
+  if(codes.includes(code)) {
+    return res.status(400).json({ message: "failed", error: "Code Already Used Before" });
+  }
+  
+  codes.push(code);
+  
   if (!code) {
     return res.status(400).json({ message: "failed", error: "Missing code" });
   }
