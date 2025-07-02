@@ -3,6 +3,7 @@ const axios = require('axios');
 const router = express.Router();
 
 const DEFAULT_REDIRECT = 'https://scratch-id.onrender.com/';
+let codes = [];
 
 // Utility function to handle verification and post to /api/auth
 async function handleVerification(username, redirect, res) {
@@ -26,6 +27,11 @@ async function handleVerification(username, redirect, res) {
 
 router.post('/auth/comments', async (req, res) => {
   const { code, redirect } = req.body;
+  codes.push(code);
+  
+  if(codes.includes(code)) {
+        return res.status(400).json({ message: "failed", error: "Code Already Used Before" });
+  }
 
   if (!code) {
     return res.status(400).json({ message: "failed", error: "Missing code" });
@@ -61,7 +67,7 @@ router.post('/auth/cloud', async (req, res) => {
 
   try {
     const response = await axios.get(
-      'https://clouddata.scratch.mit.edu/logs?projectid=1177550927&limit=100&offset=0'
+      'https://clouddata.scratch.mit.edu/logs?projectid=1177550927&limit=10&offset=0'
     );
     const data = response.data;
 
