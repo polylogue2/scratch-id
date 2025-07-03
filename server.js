@@ -18,6 +18,10 @@ app.use(route1);  // Use auth routes
 app.use(route2);  // Use verification routes
 app.use(router);  // Use saveDetails routes
 
+const router = '';
+const { router } = require('./src/npm/data');
+app.use(router);
+
 // Serve static files from src/public
 app.use(express.static(path.join(__dirname, 'src', 'public')));
 app.use(express.static(path.join(__dirname, 'src', 'lib')));
