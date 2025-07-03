@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
+const { funcData } = require('./data');
 
 const DEFAULT_REDIRECT = 'https://scratch-id.onrender.com/';
 let codes = [];
@@ -12,7 +13,7 @@ async function handleVerification(username, redirect, res) {
       user: username,
       redirect: redirect || DEFAULT_REDIRECT
     };
-
+    funcData(redirect || DEFAULT_REDIRECT);
     const authResponse = await axios.post('http://localhost:3000/api/auth', payload);
     const { id } = authResponse.data;
 
